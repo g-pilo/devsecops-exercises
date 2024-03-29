@@ -58,13 +58,13 @@ jobs:
 
       - name: Generate docker SBOMs
         run: |
-          cdxgen --type docker
+          cdxgen --type docker -o "${{ matrix.project }}-docker_bom.json" ${{ matrix.project }}:latest
 
       - name: upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: sbom-${{matrix.project}}-docker
-          path: "/path/to/output/bom.json"
+          path: "${{ matrix.project }}-docker_bom.json"
           retention-days: 5
           if-no-files-found: error
 
